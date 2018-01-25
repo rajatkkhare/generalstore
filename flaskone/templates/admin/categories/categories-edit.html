@@ -1,0 +1,74 @@
+{% extends 'admin/layouts/base.html' %}
+
+{% block body %}
+<div class="row">
+	<div class="col-sm-6">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				<h3 class="panel-title">Edit Category</h3>
+			</div>
+			<form class="form-horizontal" method="post" action="{{ url_for('prod_cat.edit', cat_id=category.id) }}" onsubmit="">
+			{{ form.csrf_token }}
+			<div class="panel-body">
+				<div class="form-group">
+					<div class="col-md-12 {% if form.title.errors %}has-error{% endif %}">
+						<input class="form-control" id="title" type="text" name="title" placeholder="Title" value="{{ category.title }}">
+						{% if form.title.errors %}
+						<div class="help-block">
+						{% for err_msg in form.title.errors %}
+							<strong>{{ err_msg }}</strong>
+						{% endfor %}
+						</div>
+						{% endif %}
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-md-6 pull-right {% if form.status.errors %}has-error{% endif %}">
+						<select class="form-control" id="status" name="status">
+							<option value="">Select Status</option>
+							<option {% if category.status == 'A' %}selected{% endif %} value="A">Active</option>
+							<option {% if category.status == 'P' %}selected{% endif %} value="P">Pending</option>
+							<option {% if category.status == 'S' %}selected{% endif %} value="S">Suspend</option>
+						</select>
+						{% if form.status.errors %}
+						<div class="help-block">
+						{% for err_msg in form.status.errors %}
+							<strong>{{ err_msg }}</strong>
+						{% endfor %}
+						</div>
+						{% endif %}
+					</div>
+				</div>
+			</div>
+			<div class="panel-footer">
+				<div class="pull-right">
+					<button type="submit" class="btn btn-primary">
+						<i class="fa fa-pencil-square-o" aria-hidden="true"></i> &nbsp; Update
+					</button>
+				</div>
+				<div class="clearfix"></div>
+			</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+	function validate() {
+		var title = $('#title');
+		var status = $('#status');
+		var err = 0;
+
+		if(title.val() == '') {
+			title.addClass('error-border');
+			err = 1;
+		} else title.removeClass('error-border');
+		if(status.val() == '') {
+			status.addClass('error-border');
+			err = 1;
+		} else status.removeClass('error-border');
+
+		if(err) return false;
+	}
+</script>
+{% endblock %}

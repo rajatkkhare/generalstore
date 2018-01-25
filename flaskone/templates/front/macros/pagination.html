@@ -1,0 +1,62 @@
+{% macro pagination(ins, url, show_pn=False, show_fl=False, suffix='') %}
+
+{% if ins.pages != 1 %}
+{% set suffix = suffix|decode_byte %}
+{% if suffix %}
+    {% set suffix = "?"+suffix %}
+{% endif %}
+<div class="text-center">
+    <ul class="pagination pagination-sm" style="margin: 0 0 20px;">
+    {% if show_fl %}
+    {% if ins.page != 1 %}
+        <li class="page-item"><a href="{{ url_for(url)+suffix }}">
+            <i class="fa fa-angle-double-left" aria-hidden="true"></i>
+        </a></li>
+    {% endif %}
+    {% endif %}
+
+    {% if show_pn %}
+    {% if ins.has_prev %}
+        {% if ins.page == 2 %}
+            <li class="page-item"><a href="{{ url_for(url)+suffix }}">
+                <i class="fa fa-angle-left" aria-hidden="true"></i>
+            </a></li>
+        {% else %}
+            <li class="page-item"><a href="{{ url_for(url, page_num=ins.page-1)+suffix }}">
+                <i class="fa fa-angle-left" aria-hidden="true"></i>
+            </a></li>
+        {% endif %}
+    {% endif %}
+    {% endif %}
+
+    {% for page in ins.iter_pages(left_edge=3, right_edge=3, left_current=3, right_current=3) %}
+        {% if page %}
+            {% if page != ins.page %}
+                <li class="page-item"><a href="{{ url_for(url, page_num=page)+suffix }}">{{ page }}</a></li>
+            {% else %}
+                <li class="page-item active"><a><strong>{{ page }}</strong></a></li>
+            {% endif %}
+        {% else %}
+            <li class="page-item disabled"><a>...</a></li>
+        {% endif %}
+    {% endfor %}
+
+    {% if show_pn %}
+    {% if ins.has_next %}
+        <li class="page-item"><a href="{{ url_for(url, page_num=ins.page+1)+suffix }}">
+            <i class="fa fa-angle-right" aria-hidden="true"></i>
+        </a></li>
+    {% endif %}
+    {% endif %}
+
+    {% if show_fl %}
+    {% if ins.page != ins.pages %}
+        <li class="page-item"><a href="{{ url_for(url, page_num=ins.pages)+suffix }}">
+            <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+        </a></li>
+    {% endif %}
+    {% endif %}
+    </ul>
+</div>
+{% endif %}
+{% endmacro %}

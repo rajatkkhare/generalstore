@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+{% import 'front/macros/flash.html' as flash with context %}
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="{% block meta_description %}{% endblock %}">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+
+    <title>{% block title %}{% endblock %}</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='front/css/font-awesome.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='front/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='front/css/style.css') }}">
+
+    <script type="text/javascript" src="{{ url_for('static', filename='front/js/jquery-2.2.4.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='front/js/bootstrap.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='front/js/custom.js') }}"></script>
+</head>
+<body>
+{% block header %}{% endblock %}
+
+<main class="container">
+    {{ flash.render() }}
+    {% block body %}{% endblock %}
+</main>
+
+{% block footer %}{% endblock %}
+</body>
+</html>

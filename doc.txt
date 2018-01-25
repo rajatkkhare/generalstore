@@ -1,0 +1,12 @@
+virtualenv venv
+. venv/bin/activate
+pip3 install Flask
+pip3 install flask-debugtoolbar
+pip3 install flask-sqlalchemy
+pip3 install mysqlclient
+pip3 install Flask-WTF
+python3 manage.py runserver
+python3 manage.py shell
+from flaskone.models import User
+from flaskone.app import db
+db.create_all() // creates the table in db

@@ -1,0 +1,88 @@
+{% extends 'front/layouts/base.html' %}
+
+{% block title %}General Store{% endblock %}
+
+{% block header %}
+<header>
+    <div class="header-top">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-6">
+                    <ul class="nav nav-pills">
+                        <li><a><i class="fa fa-phone"></i> &nbsp; +91 987 654 3219</a></li>
+                        <li><a><i class="fa fa-envelope"></i> &nbsp; info@domain.com</a></li>
+                    </ul>
+                </div>
+                <div class="col-sm-6">
+                    <ul class="nav nav-pills pull-right">
+                        <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                        <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                        <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                        <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
+                        <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<nav class="navbar navbar-inverse my-navbar">
+    <div class="container">
+        <div class="row">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand my-nav-brand" href="{{ url_for('front_home.index') }}">
+                    <i class="fa fa-shopping-bag" aria-hidden="true"></i> GENERAL STORE
+                </a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="">
+                            <span class="badge">
+                                <i class="fa fa-shopping-basket" aria-hidden="true"></i>
+                                <span id="items">&nbsp;5</span>
+                            </span>
+                        </a>
+                    </li>
+                    <li><a href="{{ url_for('front_home.index') }}">Home</a></li>
+                    {% if logged_in %}
+                    <li><a href="">Orders</a></li>
+                    <li><a href="">Account</a></li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{logged_user['first_name']}} <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="{{ url_for('front_auth.logout') }}">Logout</a></li>
+                        </ul>
+                    </li>
+                    {% else %}
+                    <li><a href="{{ url_for('front_auth.register') }}">Register</a></li>
+                    <li><a href="{{ url_for('front_auth.login') }}">Login</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>
+{% endblock %}
+
+{% block footer %}
+<footer class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="text-center">Copright &copy; {{ now.year }}. All right reserved.</div>
+        </div>
+    </div>
+</footer>
+
+<div class="msg-popup">
+    <div class="msg-body"></div>
+</div>
+{% endblock %}

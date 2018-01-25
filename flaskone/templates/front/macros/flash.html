@@ -1,0 +1,20 @@
+{# Render Flask messages. #}
+{%- macro render() -%}
+{% with messages = get_flashed_messages(with_categories=True) %}
+{% if messages %}
+{% for category, msg in messages %}
+<div class="alert my-alert alert-{{ category }}">
+    {% if msg|is_list %}
+        <ul>
+        {% for m in msg %}
+            <li>{{ m }}</li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        {{ msg }}
+    {% endif %}
+</div>
+{% endfor %}
+{% endif %}
+{% endwith %}
+{%- endmacro -%}

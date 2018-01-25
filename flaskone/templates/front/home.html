@@ -1,0 +1,51 @@
+{% extends 'front/layouts/app.html' %}
+{% from 'front/macros/product_categories.html' import product_categories with context %}
+{% from 'front/macros/pagination.html' import pagination with context %}
+
+{% block body %}
+<div class="row mh400">
+    {{ product_categories() }}
+    <div class="col-sm-9">
+        {% if products.items %}
+        <ul class="product-tile-cnt">
+            {% for product in products.items %}
+            <li class="product-tile">
+                <div class="tile-image">
+                    <a href="{{ product.id }}">
+                        <img src="{{ url_for('show_file', filename='products/262x175-'+product.image) }}">
+                    </a>
+                </div>
+                <div class="tile-info">
+                    <div class="tile-detail">
+                        <a href="{{ product.id }}">
+                            <p class="tile-prod-name">{{ product.name }}</p>
+                            {% if product.stock %}
+                            <small style="color: #28b62c;">In stock</small>
+                            {% else %}
+                            <small style="color: #ff4136;">Out of stock</small>
+                            {% endif %}
+                        </a>
+                    </div>
+                    <div class="tile-action">
+                        <p class="tile-price pull-left">&#8377; {{ '%02g' | format(product.price) }}</p>
+                        <a class="btn btn-success {% if not product.stock %}disabled{% endif %}" onclick="addToBasket({{ product.id }})">
+                            <i class="fa fa-shopping-basket" aria-hidden="true"></i>
+                        </a> &nbsp;
+                        <a class="btn btn-info" href="{{ product.id }}">
+                            <i class="fa fa-eye" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <div class="alert text-center text-muted">No products.</div>
+        {% endif %}
+
+        <div class="clearfix"></div>
+
+        {{ pagination(products, 'front_home.index', True, suffix=request.query_string) }}
+    </div>
+</div>
+{% endblock %}

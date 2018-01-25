@@ -1,0 +1,67 @@
+{% extends 'front/layouts/app.html' %}
+{% block title %}LOGIN - General Store{% endblock %}
+{% block body %}
+<div class="row mb40 mh400">
+    <div class="col-sm-4 col-sm-offset-4">
+        <div class="panel">
+            <div class="panel-heading my-panel-heading">
+                <h3 class="panel-title">Login</h3>
+            </div>
+            <form class="form-horizontal" method="post" action="{{ url_for('front_auth.login') }}" onsubmit="">
+                {{ form.csrf_token }}
+                <div class="panel-body">
+                    <div class="form-group">
+                        <div class="col-md-12 {% if form.email.errors %}has-error{% endif %}">
+                            <input class="form-control" id="email" type="text" name="email" placeholder="Email" value="{{ request.form['email'] }}">
+                            {% if form.email.errors %}
+                            <div class="help-block">
+                            {% for err_msg in form.email.errors %}
+                                <strong>{{ err_msg }}</strong>
+                            {% endfor %}
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <div class="col-md-12 {% if form.password.errors %}has-error{% endif %}">
+                            <input class="form-control" id="password" type="password" name="password" placeholder="Password">
+                            {% if form.password.errors %}
+                            <div class="help-block">
+                            {% for err_msg in form.password.errors %}
+                                <strong>{{ err_msg }}</strong>
+                            {% endfor %}
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-footer">
+                    <div class="pull-right">
+                        <button type="submit" class="btn btn-primary my-btn-primary">Login</button>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function validate() {
+        var email = $('#email');
+        var password = $('#password');
+        var err = 0;
+
+        if (email.val() == '') {
+            email.addClass('error-border');
+            err = 1;
+        } else email.removeClass('error-border');
+        if (password.val() == '') {
+            password.addClass('error-border');
+            err = 1;
+        } else password.removeClass('error-border');
+
+        if (err) return false;
+    }
+</script>
+{% endblock %}

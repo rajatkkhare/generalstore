@@ -1,0 +1,9 @@
+Flask
+flask-debugtoolbar
+Flask-WTF
+Flask-RESTful
+Flask-SQLAlchemy
+Pillow
+uwsgi
+mysqlclient
+psycopg2
